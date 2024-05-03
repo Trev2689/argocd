@@ -1,10 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: vault-project
+  name: vault-app-project
 spec:
+  destination:
+    namespace:
+      - '*'
   sourceRepos:
-    - <URL_to_vault_repo>
-  destinations:
-    - namespace: <argo_cd_namespace>
-      server: https://kubernetes.default.svc
+    - https://helm.releases.hashicorp.com
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  roles:
+    - name: default
+      policies:
+        - namespace: "*"
+          resources:
+            - group: '*'
+              kind: '*'
+              name: '*'
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
