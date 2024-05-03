@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vault-instances
+spec:
+  generator:
+    list:
+      elements:
+        - name: dublin-vault
+          namespace: <namespace1>
+          values:
+            repository: <URL_to_values_repo>
+            revision: main
+            path: path/to/values1.yaml
+        - name: kildare-vault
+          namespace: <namespace2>
+          values:
+            repository: <URL_to_values_repo>
+            revision: main
+            path: path/to/values2.yaml
+        # Add more namespaces as needed
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vault
+    spec:
+      project: vault-project
+      source:
+        repoURL: https://helm.releases.hashicorp.com
+        chart: vault
+        targetRevision: 0.27.0  # Specify the version of the Vault Helm chart here
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{item.namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+      helm:
+        values: |
+          {{- include (download item.values.repository item.values.revision item.values.path) . | nindent 10 }}
