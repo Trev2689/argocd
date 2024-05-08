@@ -6,7 +6,6 @@ namespace: argocd
 resources:
 - namespace.yaml
 - project.yaml
-- values.yaml
 
 helmCharts:
 - name: argo-cd
