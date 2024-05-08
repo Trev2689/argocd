@@ -3,8 +3,7 @@ kind: Kustomization
 
 namespace: wednesday-vault
 
-resources:
-- servicemonitor.yaml
+
 
 
 helmCharts:
