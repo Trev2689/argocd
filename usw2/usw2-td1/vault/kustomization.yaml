@@ -6,7 +6,7 @@ namespace: argo-vault
 
 helmCharts:
 - name: hashicorp-vault
-  version: 0.27.0  # Specify the version of the HashiCorp Vault Helm chart
+  version: 1.15.2  # Specify the version of the HashiCorp Vault Helm chart
   releaseName: argo-vault
   repo: https://helm.releases.hashicorp.com
   valuesFile: values.yaml  # Path to your custom values.yaml file
