@@ -5,7 +5,7 @@ namespace: argo-vault
 
 
 helmCharts:
-- name: hashicorp-vault
+- name: vault
   version: 1.15.2  # Specify the version of the HashiCorp Vault Helm chart
   releaseName: argo-vault
   repo: https://helm.releases.hashicorp.com
