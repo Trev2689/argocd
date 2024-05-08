@@ -3,6 +3,10 @@ kind: Kustomization
 
 namespace: wednesday-vault
 
+resources:
+- ingressroute.yaml
+- servicemonitor.yaml
+
 
 helmCharts:
 - name: vault
