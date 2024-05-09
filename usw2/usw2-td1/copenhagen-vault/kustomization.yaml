@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: copenhagen-vault
+
+
+
+
+helmCharts:
+- name: vault
+  version: 0.27.0  # Specify the version of the HashiCorp Vault Helm chart
+  releaseName: copenhagen
+  repo: https://helm.releases.hashicorp.com
+  valuesFile: values.yaml  # Path to your custom values.yaml file
+  namespace: copenhagen-vault  # Namespace where the HashiCorp Vault should be installed
