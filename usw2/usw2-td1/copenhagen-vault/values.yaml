@@ -1,0 +1,101 @@
+USER-SUPPLIED VALUES:
+global:
+  serverTelemetry:
+    prometheusOperator: true
+  tlsDisable: false
+injector:
+  enabled: false
+server:
+  extraContainers:
+  - args:
+    - /vault/tls/tls.crt
+    image: docker.io/trev2689/vault-cert-reloader:1.2
+    name: vault-cert-watcher
+    volumeMounts:
+    - mountPath: /vault/tls
+      name: tls
+      readOnly: true
+  extraEnvironmentVars:
+    VAULT_CACERT: /vault/tls/ca.crt
+    VAULT_TLSCERT: /vault/tls/tls.crt
+    VAULT_TLSKEY: /vault/tls/tls.key
+  ha:
+    enabled: true
+    raft:
+      config: |
+        ui = true
+        disable_mlock = true
+        listener "tcp" {
+          tls_disable = false
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+          tls_cert_file = "/vault/tls/tls.crt"
+          tls_key_file  = "/vault/tls/tls.key"
+          tls_client_ca_file = "/vault/tls/ca.crt"
+          # Enable unauthenticated metrics access for Prometheus Operator
+          telemetry {
+            unauthenticated_metrics_access = "true"
+          }
+        }
+        telemetry {
+          prometheus_retention_time = "30m"
+          disable_hostname = true
+        }
+        storage "raft" {
+          path    = "/vault/data"
+          retry_join {
+              leader_api_addr = "https://copenhagen-vault-0.copenhagen-vault-internal.copenhagen-vault.svc.cluster.local:8200"
+              leader_ca_cert_file = "/vault/tls/ca.crt"
+          }
+          retry_join {
+              leader_api_addr = "https://copenhagen-vault-1.copenhagen-vault-internal.copenhagen-vault.svc.cluster.local:8200"
+              leader_ca_cert_file = "/vault/tls/ca.crt"
+          }
+          retry_join {
+              leader_api_addr = "https://copenhagen-vault-2.copenhagen-vault-internal.copenhagen-vault.svc.cluster.local:8200"
+              leader_ca_cert_file = "/vault/tls/ca.crt"
+          }
+        }
+        seal "awskms" {
+          region = "us-west-2"
+          kms_key_id = "49788035-7054-4f7c-ba63-ab598a02ca05"
+        }
+        service_registration "kubernetes" {}
+      enabled: true
+      setNodeId: true
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 60
+    path: /v1/sys/health?standbyok=true
+  logLevel: debug
+  postStart:
+  - /bin/sh
+  - -c
+  - sleep 5 && /vault/bootstrap/bootstrap.sh > /tmp/bootstrap.log
+  readinessProbe:
+    enabled: true
+    path: /v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204
+  serverTelemetry:
+    serviceMonitor:
+      enabled: true
+  service:
+    clusterIP: None
+    enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::997925851768:role/anubis-t3-usw2-td1-copenhagen-vault-role
+  shareProcessNamespace: true
+  volumeMounts:
+  - mountPath: /vault/tls
+    name: tls
+    readOnly: true
+  - mountPath: /vault/bootstrap
+    name: bootstrap
+  volumes:
+  - name: tls
+    secret:
+      secretName: copenhagen-vault-tls
+  - configMap:
+      defaultMode: 365
+      name: bootstrap
+    name: bootstrap
