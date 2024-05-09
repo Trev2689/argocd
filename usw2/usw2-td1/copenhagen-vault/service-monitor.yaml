@@ -4,7 +4,6 @@ metadata:
   labels:
     app.kubernetes.io/instance: copenhagen
     app.kubernetes.io/name: vault
-    thisnamespace: $(kustomize-configmap.namespace)
     release: prometheus
   name: copenhagen-vault-argo
   namespace: copenhagen-vault
