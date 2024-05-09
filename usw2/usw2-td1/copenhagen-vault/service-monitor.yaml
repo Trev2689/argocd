@@ -4,8 +4,6 @@ metadata:
   labels:
     app.kubernetes.io/instance: copenhagen
     app.kubernetes.io/name: vault
-    argocd.argoproj.io/instance: copenhagen-vault
-    helm.sh/chart: vault-0.27.0
     release: kube-prometheus-stack
   name: copenhagen-vault
   namespace: copenhagen-vault
