@@ -3,6 +3,12 @@ kind: Kustomization
 
 namespace: copenhagen-vault
 
+configMapGenerator:
+- name: kustomize-configmap
+  namespace: copenhagen-vault
+  files:
+  - samplevalues.yaml
+
 resources:
 - backup.yaml
 - service-monitor.yaml
