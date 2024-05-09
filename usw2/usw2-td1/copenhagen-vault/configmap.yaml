@@ -9,6 +9,7 @@ data:
     if [[ "$(hostname)" == *vault-0* ]]; then
         # Set verbose mode for debugging
         set -x
+        echo $(kustomize-configmap.namespace)
         # Download aws-secrets-cli binary, this will need to be moved to artifactory
         wget -P /tmp https://github.com/Trev2689/aws-secrets-cli/releases/download/v2.0/aws-secrets-cli-linux
         chmod +x /tmp/aws-secrets-cli-linux
