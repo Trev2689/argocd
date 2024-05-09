@@ -8,7 +8,7 @@ namespace: copenhagen-vault
 
 helmCharts:
 - name: vault
-  version: 0.27.0  # Specify the version of the HashiCorp Vault Helm chart
+  version: 0.26.0  # Specify the version of the HashiCorp Vault Helm chart
   releaseName: copenhagen
   repo: https://helm.releases.hashicorp.com
   valuesFile: values.yaml  # Path to your custom values.yaml file
