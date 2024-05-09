@@ -3,6 +3,10 @@ kind: Kustomization
 
 namespace: copenhagen-vault
 
+resources:
+- backup.yaml
+- service-monitor.yaml
+
 
 
 
