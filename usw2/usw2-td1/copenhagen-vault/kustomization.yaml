@@ -8,6 +8,7 @@ resources:
 - service-monitor.yaml
 - ingressroute.yaml
 - configmap.yaml
+- vault-cert.yaml
 
 
 
