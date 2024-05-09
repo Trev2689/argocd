@@ -1,12 +1,8 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  creationTimestamp: "2024-04-30T09:19:21Z"
-  generation: 1
   name: vault-backup
   namespace: copenhagen-vault
-  resourceVersion: "3890338"
-  uid: e06d9180-c5e7-43ef-8dfb-fd204742702b
 spec:
   concurrencyPolicy: Allow
   failedJobsHistoryLimit: 2
