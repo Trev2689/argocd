@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: vault-backup
-  namespace: $(kustomize-configmap.copenhagen-vault)
+  namespace: $(kustomize-configmap.namespace)
 spec:
   concurrencyPolicy: Allow
   failedJobsHistoryLimit: 2
