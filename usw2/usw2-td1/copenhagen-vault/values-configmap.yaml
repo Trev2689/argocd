@@ -4,5 +4,6 @@ metadata:
   name: test-kustomize
   namespace: copenhagen-vault
 data:
-namespace: $(kustomize.configMap.kustomize-configmap.namespace)
-namecustom: $(kustomize.configMap.kustomize-configmap.name)
+data:
+  namespace: "$(kustomize.configMap.kustomize-configmap.namespace)"
+  namecustom: "$(kustomize.configMap.kustomize-configmap.name)"
