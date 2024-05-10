@@ -4,9 +4,5 @@ metadata:
   name: test-kustomize
   namespace: copenhagen-vault
 data:
-  namecustom: "placeholder"  # Placeholder value
-  namespace: "placeholder"   # Placeholder value
-  # Add other data as needed
-valuesFrom:
-- configMapRef:
-    name: kustomize-configmap
+  name: $(kustomize.configMap.kustomize-configmap.data.name)
+  namespace: $(kustomize.configMap.kustomize-configmap.data.namespace)
