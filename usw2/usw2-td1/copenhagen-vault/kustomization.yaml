@@ -15,6 +15,7 @@ resources:
 - ingressroute.yaml
 - configmap.yaml
 - vault-cert.yaml
+- values-configmap.yaml
 
 
 
