@@ -7,15 +7,17 @@ configMapGenerator:
 - name: kustomize-configmap
   namespace: copenhagen-vault
   files:
-  - samplevalues.yaml
+    - samplevalues.yaml
+  options:
+    disableNameSuffixHash: true
   
-transformers:
-- apiVersion: builtin
-  kind: ConfigMapRefGenerator
-  metadata:
-    name: kustomize-configmap
-    namespace: copenhagen-vault
-  behavior: merge
+# transformers:
+# - apiVersion: builtin
+#   kind: ConfigMapRefGenerator
+#   metadata:
+#     name: kustomize-configmap
+#     namespace: copenhagen-vault
+#   behavior: merge
 
 
 
