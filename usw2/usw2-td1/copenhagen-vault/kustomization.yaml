@@ -8,6 +8,14 @@ configMapGenerator:
   namespace: copenhagen-vault
   files:
   - samplevalues.yaml
+  
+transformers:
+- apiVersion: builtin
+  kind: ConfigMapRefGenerator
+  metadata:
+    name: kustomize-configmap
+    namespace: copenhagen-vault
+  behavior: merge
 
 resources:
 - backup.yaml
