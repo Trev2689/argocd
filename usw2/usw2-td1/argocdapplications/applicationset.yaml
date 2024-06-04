@@ -9,7 +9,7 @@ spec:
       repoURL: https://github.com/Trev2689/argocd.git
       revision: HEAD
       directories:
-      - path: usw2/usw2-td1/*
+      - path: usw2/usw2-td1/argocd
   template:
     metadata:
       name: '{{path.basename}}'
